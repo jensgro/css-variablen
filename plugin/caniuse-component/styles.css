@@ -1,0 +1,47 @@
+.caniuse--result-list {
+	display:flex !important;
+	flex-wrap:wrap;
+	font-family:inherit;
+	margin:0 !important;
+	padding:0 !important;
+	list-style-type: none;
+}
+.caniuse--result-list li {
+	border-radius:2px;
+	flex:1;
+	list-style:none;
+	margin:10px;
+	padding:10px;
+	text-align:center
+}
+.caniuse--result-list .caniuse--browser-img {
+	height:120px;
+	margin:20px auto 0;
+	width:120px
+}
+.caniuse--result-list .caniuse--browser-name {
+	font-size:32px;
+	line-height:1
+}
+.caniuse--result-list .caniuse--browser-results {
+	font-size:24px;
+	line-height:0
+}
+.caniuse--result-list .caniuse--support-level {
+	font-size:18px
+}
+.caniuse--result-list .support--partial {
+	color:#000;
+	border: 10px solid #ffc307;
+	border-bottom-width: 20px;
+}
+.caniuse--result-list .support--full {
+	color:#000;
+	border: 10px solid #19cc69;
+	border-bottom-width: 20px;
+}
+.caniuse--result-list .support--none {
+	color:#000;
+	border: 10px solid #de2a2a;
+	border-bottom-width: 20px;
+}

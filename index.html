@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>CSS-Variablen</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/jens-light.css" id="theme">
+        <link rel="stylesheet" href="lib/css/color-brewer.css">
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>CSS-Variablen</h1>
+                    <p>Jens Grochtdreis</p>
+                </section>
+
+                <section>
+                    <section class="shouting">
+                        <h2>Genauer betrachtet gibt es in CSS schon länger Variablen.</h2>
+                    </section>
+
+                    <section>
+                        <h2>currentColor</h2>
+                        <pre><code class="css">
+            blockquote {
+                color: red;
+                border: 2px dashed currentColor;
+            }
+        </code></pre>
+                        <div class="linksToOutside"><a href="https://codepen.io/jensgro/pen/mdLypLz?editors=1100"
+                                target="_blank">ein Beispiel auf Codepen</a></div>
+                    </section>
+
+                    <section>
+                        <h2>currentColor ist Standard bei folgenden Eigenschaften</h2>
+                        <ul>
+                            <li><code>border-color</code></li>
+                            <li><code>caret-color</code></li>
+                            <li><code>column-rule-color</code></li>
+                            <li><code>text-decoration-color</code></li>
+                            <li><code>text-emphasis-color</code></li>
+                            <li><code>outline-color</code></li>
+                        </ul>
+                        <p>Aber <mark>nicht bei Links</mark>!</p>
+                    </section>
+
+                    <section>
+                        <h2>Sinnvoller Einsatz bei ...</h2>
+                        <ul>
+                            <li>Buttons</li>
+                            <li>Links innerhalb von Überschriften</li>
+                            <li>Zitatboxen</li>
+                            <li>Hinweisboxen</li>
+                        </ul>
+                        <div class="linksToOutside"><a href="https://codepen.io/jensgro/full/zQZLyR"
+                                target="_blank">CodePen mit Beispielen</a></div>
+                    </section>
+
+                    <section>
+                        <h2>counter</h2>
+                        <pre><code class="css">
+    .main-container {
+        counter-reset: headlines; /* wichtig: im Elternelement setzen! */
+    }
+    h2:before {
+        counter-increment: headlines;
+        content: counter(headlines);
+        
+        /* und jetzt kommt Positionierung und Gestaltung */
+    }
+        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Konfiguration des counter</h2>
+                        <p>Man kann das Inkrement auch in 5er-Schritten konfigurieren:</p>
+                        <pre><code class="css">
+    h2:before {
+        counter-increment: headlines 5;
+    }
+        </code></pre>
+
+                        <p>Die Ausgabe kann auch in Buchstaben erfolgen:</p>
+                        <pre><code class="css">
+    h2:before {
+        content: counter(headlines, upper-alpha);
+    }
+        </code></pre>
+                        <div class="linksToOutside"><a href="https://codepen.io/jensgro/pen/ZNBRQb" target="_blank">zum
+                                Codepen</a></div>
+                    </section>
+
+
+                    <section>
+                        <h2>Die Umgebungsvariable env()</h2>
+                        <pre><code class="css">
+    body {
+      padding:
+        env(safe-area-inset-top, 20px) /* Variable mit Fallback */
+        env(safe-area-inset-right, 20px)
+        env(safe-area-inset-bottom) /* Variable ohne Fallback */
+        env(safe-area-inset-left, 20px);
+    }
+        </code></pre>
+                        <p>Diese Umgebungsvariablen wurden wegen des "notch" eingeführt (Aussparung im Screen eines
+                            Handys) und werden von allen modernen Browsern unterstützt. </p>
+                    </section>
+
+                </section>
+
+
+                <section>
+                    <section class="shouting">
+                        <h2>Custom Properties</h2>
+                        <h3>vulgo: CSS-Variables</h3>
+                    </section>
+
+                    <section class="shouting-secondary">
+                        <h2>Custom Properties werden oft als "CSS-Variablen" bezeichnet. Das ist nicht ganz passend.</h2>
+                    </section>
+
+                    <section>
+                        <h2>Warum custom <mark>properties</mark>?</h2>
+                        <figure>
+                            <img src="pictures/custom-properties/css-rule.png" alt="Die CSS-Terminologie an einem Schema erklärt.">
+                        </figure>
+                    </section>
+
+                    <section>
+                        <h2>So schreibt man sie</h2>
+                        <pre><code class="css">
+:root {
+    /* Es kann in CamelCase oder nicht geschrieben werden. */
+    /* Die beiden Bindestriche am Anfang signalisieren "custom property". */
+    --textColor: #000;
+    --link-color: #a2000;
+}
+
+#content {
+    --link-color: maroon;
+}
+
+#wetter {
+    --icon: url("assets/icons/wetter.svg");
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>So implementiert man sie</h2>
+<pre><code class="css">
+    body {
+        color: var(--textColor);
+    }    
+
+    a {
+        color: var(--link-color);
+    }
+
+    .meta-nav:before {
+        content: var(--icon);
+        width: 20px;
+        height: 20px;
+    }
+</code></pre>
+                    </section>
+                    <section class="shouting-tertiary">
+                        <h2>Sie werden <a href="https://caniuse.com/#search=variables"
+                            target="_blank">in allen aktuellen Browsern</a> unterstützt.</h2>
+                    </section>
+
+                    <section>
+                        <h2>In CSS und HTML kann man eigene Sachen erstellen:</h2>
+                        <ul class="x-large-text">
+                            <li>custom properties in CSS</li>
+                            <li>custom elements in HTML</li>
+                        </ul>    
+                    </section>
+
+
+                    <section>
+                        <h2>(Echte) Variablen in Präprozessoren wie Sass werden lokal in CSS transferiert. Es bleiben keine
+                            Variablen übrig.</h2>
+                    </section>
+
+                    <section>
+                        <h2>Custom Properties hingegen bleiben als solche im CSS. Deshalb kann auf sie per JavaScript
+                            zugegriffen werden, auch um diese zu manipulieren. </h2>
+                    </section>
+
+                    <section>
+                        <h2>Globale Wirkung</h2>
+                        <pre><code class="css">
+    /* Hier werden properties erschaffen! */
+    :root {
+        --main-color: #000;
+        --link-color: #a20000;
+    }        
+    /* Und hier die Eigenschaft als Wert zugewiesen. */
+    body {
+        color: var(--main-color);
+    }
+    a {
+        color: var(--link-color);
+    }
+        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Lokale Wirkung</h2>
+                        <p>Eine globale Custom Property kann für den lokalen Kontext überschrieben werden. Custom
+                            Properties unterliegen der Kaskade!</p>
+                        <pre><code>
+    :root {
+        --link-color: red;
+    }        
+    
+    a {
+        color: var(--link-color);
+    }
+    
+    .mein-modul {
+        --link-color: green;
+    }        
+    .mein-anderes-modul {
+        --link-color: blue;
+    }
+        </code></pre>
+                        <div class="linksToOutside"><a href="https://codepen.io/jensgro/pen/mYmVpe" target="_blank">zum
+                                CodePen</a></div>
+                    </section>
+
+                    <section>
+                        <h2>Custom Properties ...</h2>
+                        <ul>
+                            <li>sind Teil der Kaskade</li>
+                            <li>werden vererbt</li>
+                            <li>sind global und lokal möglich</li>
+                            <li>sind case-sensitive (--link-color ≠ --link-Color)</li>
+                            <li>sind reine Strings</li>
+                            <li>sind keine Variablen im klassischen Sinn</li>
+                        </ul>
+                    </section>
+
+                    <section class="shouting-tertiary">
+                        <h2>Custom Properties funktionieren <mark>nicht</mark> für Werte einer Media Query!</h2>
+                    </section>
+
+                    <section>
+                        <h2>Man kann sie aber in Media Queries neu setzen!</h2>
+                        <pre><code class="css">
+    :root {
+        --headline-2: 2rem;
+    }
+    
+    @media (min-width: 1000px) {
+        :root {
+            --headline-2: 3rem;
+        }
+    }
+        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Ein wenig mit custom properties spielen</h2>
+
+                        <img src="pictures/custom-properties/custom-properties.png"
+                            alt="Eine Beispielseite auf CodePen zum Testen von custom properties." class="stretch">
+                        <div class="linksToOutside"><a href="https://codepen.io/jensgro/pen/JqJbLd" target="_blank">zum
+                                CodePen</a></div>
+                    </section>
+
+                    <section class="shouting-tertiary">
+                        <h2><a href="https://codepen.io/collection/naydzK/" target="_blank">Beispielsammlung</a> auf
+                            CodePen</h2>
+                    </section>
+                    <section class="shouting-secondary">
+                        <h2><a href="https://codepen.io/jensgro/full/ZNyVNx" target="_blank">Aufgabensammlung</a> auf
+                            CodePen</h2>
+                    </section>
+
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Das war's!</h2>
+                        <img src="pictures/general/klatsch-klatsch-klatsch.jpg" alt="" class="flexible">
+                    </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+        <script>
+            // More info https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                history: true,
+                slideNumber: true,
+                slideNumber: 'c/t',
+                center: true,
+                transition: 'default', // none/fade/slide/convex/concave/zoom
+                transitionSpeed: 'fast', // default/fast/slow
+                // width: 1280,
+                // height: 800,
+                width: 1024,
+                height: 768,
+                menu: {
+                    titleSelector: 'h1, h2',
+                    numbers: true,
+                    transitions: false,
+                    themes: [{
+                            name: 'Dark',
+                            theme: 'css/theme/jens-dark.css'
+                        },
+                        {
+                            name: 'Light',
+                            theme: 'css/theme/jens-light.css'
+                        }
+                    ]
+                },
+                // More info https://github.com/hakimel/reveal.js#dependencies
+                dependencies: [{
+                        src: 'plugin/highlight/highlight.js',
+                        async: true,
+                        callback: function () {
+                            hljs.initHighlightingOnLoad();
+                        }
+                    },
+                    {
+                        src: 'plugin/notes/notes.js',
+                        async: true
+                    },
+                    {
+                        src: 'plugin/menu/menu.js',
+                        async: true
+                    }
+                ]
+            });
+        </script>
+        <!-- Copyright © 2018 Jens Grochtdreis, Webkrauts -->
+    </body>
+
+</html>
